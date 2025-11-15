@@ -27,6 +27,7 @@ int main() {
     cout << insertResult << endl;
     insertResult = tree.insert("G", 'G');
     cout << insertResult << endl;
+
     // insertResult = tree.insert("K", 'K');
     // insertResult = tree.insert("X", 'X');// single rotate left
     cout << endl << endl;

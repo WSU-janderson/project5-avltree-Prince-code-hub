@@ -50,7 +50,16 @@ public:
 public:
     AVLTree() : root(nullptr) {};
 
-    AVLNode*& recursion(AVLNode*& current,const std::string &key, size_t value);
+    bool recursion(AVLNode*& current,const std::string &key, size_t value);
+    int height(AVLNode* Node);
+    bool rotateRight(AVLNode*& node);
+    bool rotateLeft(AVLNode*& node);
+    friend std::ostream& operator<<(ostream& os, const AVLTree& avlTree);
+    void printSubtree(AVLNode* node, int depth) const;
+
+
+
+
 
 
 private:
