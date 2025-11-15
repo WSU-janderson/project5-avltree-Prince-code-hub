@@ -10,12 +10,18 @@ using namespace std;
 
 class AVLTree {
 public:
+    // AVLTree();
+
     using KeyType = std::string;
     using ValueType = size_t;
+
+    bool insert(const std::string& key, size_t value);
+
 
 protected:
     class AVLNode {
     public:
+
         KeyType key;
         ValueType value;
         size_t height;
@@ -40,6 +46,14 @@ public:
 
     private:
     AVLNode* root;
+
+public:
+    AVLTree() : root(nullptr) {};
+
+    AVLNode*& recursion(AVLNode*& current,const std::string &key, size_t value);
+
+
+private:
 
     /* Helper methods for remove */
     // this overloaded remove will do the recursion to remove the node

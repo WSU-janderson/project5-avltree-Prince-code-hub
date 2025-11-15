@@ -2,24 +2,62 @@
 
 #include <string>
 
+bool AVLTree::insert(const std::string &key, size_t value) {
+    if (root == nullptr) {
+        root = new AVLNode();
+        root->key = key;
+        root->value = value;
+        root->left = nullptr;
+        root->right = nullptr;
+        root->height = 0;
+        return true;
+    }
+    AVLNode *&insertPos = recursion(root, key, value);
+
+    if (insertPos != nullptr) {
+        return false;
+    }
+    insertPos = new AVLNode();
+    insertPos->key = key;
+    insertPos->value = value;
+    insertPos->left = nullptr;
+    insertPos->right = nullptr;
+    insertPos->height = 0;
+
+
+
+    return true;
+}
+
+
 size_t AVLTree::AVLNode::numChildren() const {
-    return 0;
+    if (left == nullptr && right == nullptr) {
+        return 0;
+    } else if (left != nullptr && right != nullptr) {
+        return 2;
+    } else {
+        return 1;
+    }
 }
 
 bool AVLTree::AVLNode::isLeaf() const {
-    return false;
+    if (left == nullptr && right == nullptr) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 size_t AVLTree::AVLNode::getHeight() const {
-    return 0;
+    return height;
 }
 
-bool AVLTree::removeNode(AVLNode*& current){
+bool AVLTree::removeNode(AVLNode *&current) {
     if (!current) {
         return false;
     }
 
-    AVLNode* toDelete = current;
+    AVLNode *toDelete = current;
     auto nChildren = current->numChildren();
     if (current->isLeaf()) {
         // case 1 we can delete the node
@@ -35,7 +73,7 @@ bool AVLTree::removeNode(AVLNode*& current){
         // case 3 - we have two children,
         // get smallest key in right subtree by
         // getting right child and go left until left is null
-        AVLNode* smallestInRight = current->right;
+        AVLNode *smallestInRight = current->right;
         // I could check if smallestInRight is null,
         // but it shouldn't be since the node has two children
         while (smallestInRight->left) {
@@ -56,6 +94,28 @@ bool AVLTree::removeNode(AVLNode*& current){
     delete toDelete;
 
     return true;
+}
+
+AVLTree::AVLNode *&AVLTree::recursion(AVLNode *&current, const std::string &key, size_t value) {
+    if (current == nullptr) {
+        return current;
+    }
+    if (current->key == key) {
+        return current;
+    }
+    if (key < current->key) {
+        return recursion(current->left, key, value);
+    }
+    if (key > current->key) {
+        return recursion(current->right, key, value);
+    }
+}
+
+int AVLTree::getHeight(AVLNode *node) {
+    if (node == nullptr) {
+        return -1;
+    }
+    return node->height;
 }
 
 bool AVLTree::remove(AVLNode *&current, KeyType key) {
