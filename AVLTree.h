@@ -16,6 +16,7 @@ public:
     using ValueType = size_t;
 
     bool insert(const std::string& key, size_t value);
+    bool remove(const std::string& key);
 
 
 protected:

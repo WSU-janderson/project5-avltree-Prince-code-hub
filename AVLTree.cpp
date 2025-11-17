@@ -2,7 +2,8 @@
 
 #include <iostream>
 #include <string>
-#include <bits/ios_base.h>
+
+
 
 bool AVLTree::insert(const std::string &key, size_t value) {
 
@@ -17,6 +18,10 @@ bool AVLTree::insert(const std::string &key, size_t value) {
     // }
 
     return recursion(root, key, value);
+}
+
+bool AVLTree::remove(const std::string &key) {
+    return remove(root, key);
 }
 
 
@@ -164,10 +169,34 @@ bool AVLTree::rotateLeft(AVLNode *&node) {
 }
 
 void AVLTree::printSubtree(AVLNode *node, int depth) const {
+
+
 }
 
 bool AVLTree::remove(AVLNode *&current, KeyType key) {
-    return false;
+
+    if (current == nullptr) {
+        return false;
+    }
+
+    bool removed;
+
+    if(key < current->key) {
+       removed =  remove(current->left, key);
+    }else if (key > current->key) {
+        removed =remove(current->right, key);
+    }else {
+            removed = removeNode(current);
+        return removed;
+    }
+
+
+
+    if (removed) {
+        current->height = 1 + max(height(current->left), height(current->right));
+        balanceNode(current);
+    }
+    return removed;
 }
 
 void AVLTree::balanceNode(AVLNode *&node) {
@@ -215,5 +244,6 @@ std::ostream & operator<<(ostream &os, const AVLTree &avlTree) {
     }
 
 
+    return os;
 
 }
