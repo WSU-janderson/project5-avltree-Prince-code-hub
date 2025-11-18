@@ -4,7 +4,9 @@
 
 #ifndef AVLTREE_H
 #define AVLTREE_H
+#include <optional>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -14,9 +16,25 @@ public:
 
     using KeyType = std::string;
     using ValueType = size_t;
+    size_t length;
 
     bool insert(const std::string& key, size_t value);
     bool remove(const std::string& key);
+    bool contains(const std::string&) const;
+    optional<size_t> get(const std::string&) const;
+    size_t& operator[](const std::string& key);
+    vector<size_t> findRange(const string& lowKey, const string& highKey) const;
+    vector<std::string>keys() const;
+    size_t size() const;
+    size_t getHeight() const;
+    AVLTree *operator=(const AVLTree& other);
+    ~AVLTree();
+
+
+
+
+
+
 
 
 protected:
@@ -26,6 +44,7 @@ protected:
         KeyType key;
         ValueType value;
         size_t height;
+
 
         AVLNode* left;
         AVLNode* right;
@@ -49,7 +68,7 @@ public:
     AVLNode* root;
 
 public:
-    AVLTree() : root(nullptr) {};
+    AVLTree() : root(nullptr), length(0){};
 
     bool recursion(AVLNode*& current,const std::string &key, size_t value);
     int height(AVLNode* Node);
@@ -57,6 +76,11 @@ public:
     bool rotateLeft(AVLNode*& node);
     friend std::ostream& operator<<(ostream& os, const AVLTree& avlTree);
     void printSubtree(AVLNode* node, int depth) const;
+    void findRangeHelper(AVLNode* node,const string& lowKey, const string& highKey, vector<size_t> &result) const;
+    vector<string> keysHelper(AVLNode* node, vector<string> &result) const;
+
+    void clear(AVLNode* node);
+    AVLNode *searchNode(AVLNode *node, const std::string key) const;
 
 
 

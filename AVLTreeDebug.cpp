@@ -12,112 +12,123 @@ using namespace std;
 
 
 int main() {
-    // AVLTree tree;
-    // bool insertResult;
-    // bool removeResult;
-    // insertResult = tree.insert("F", 'F');
-    // cout << insertResult << endl;
+    bool insertResult;
+    bool removeResult;
+    AVLTree tree;
+    insertResult = tree.insert("F", 'F');
+    cout << insertResult << endl;
 
-    // tree.insert("F", 'F');
-    // tree.insert("H", 'H');
-    // tree.insert("G", 'G');
+    tree.insert("B", 'B');
+    tree.insert("A", 'A');
+    tree.insert("C", 'C');
+    tree.insert("K", 'K');
+    tree.insert("F", 'F');
+    tree.insert("N", 'N');
+    tree.insert("G", 'G');
+    // int a =  tree.size();
+    // cout << a << endl;
 
-
-//     insertResult = tree.insert("B", 'B'); // false, no duplicates allowed
-//     cout << insertResult << endl;
-//     insertResult = tree.insert("C", 'C'); // false, no duplicates allowed
-//     cout << insertResult << endl;
-//     insertResult = tree.insert("A", 'A'); // false, no duplicates allowed
-//     cout << insertResult << endl;
-//     insertResult = tree.insert("F", 'F');
-//     cout << insertResult << endl;
-//     insertResult = tree.insert("G", 'G');
-//     cout << insertResult << endl;
-//     removeResult = tree.remove("G");
-// cout << removeResult << endl;
+    cout << tree << endl;
 
 
-    // insertResult = tree.insert("K", 'K');
-    // insertResult = tree.insert("X", 'X');// single rotate left
+
+    insertResult = tree.insert("B", 'B'); // false, no duplicates allowed
+    cout << insertResult << endl;
+    insertResult = tree.insert("C", 'C'); // false, no duplicates allowed
+    cout << insertResult << endl;
+    insertResult = tree.insert("A", 'A'); // false, no duplicates allowed
+    cout << insertResult << endl;
+    insertResult = tree.insert("F", 'F');
+    cout << insertResult << endl;
+    insertResult = tree.insert("G", 'G');
+    cout << insertResult << endl;
+    removeResult = tree.remove("G");
+cout << removeResult << endl;
+
+
+    insertResult = tree.insert("K", 'K');
+    insertResult = tree.insert("X", 'X');// single rotate left
     cout << endl << endl;
-    // cout << tree << endl;
-    //
-    // insertResult = tree.insert("C", 'C');
-    // insertResult = tree.insert("A", 'A'); // single rotate right
-    // cout << endl << endl;
-    // cout << tree << endl;
-    //
-    // insertResult = tree.insert("D", 'D'); // double rotate right
-    // cout << endl << endl;
-    // cout << tree << endl;
-    //
-    // insertResult = tree.insert("R", 'R'); // double rotate left
-    // cout << endl << endl;
-    // cout << tree << endl;
-    //
-    // insertResult = tree.insert("V", 'V');
-    // insertResult = tree.insert("A", 'A'); // false, duplicate
-    // insertResult = tree.insert("Z", 'Z');
-    // insertResult = tree.insert("M", 'M');
-    // insertResult = tree.insert("D", 'D'); // false, duplicate
-    // cout << endl << endl;
-    // cout << tree << endl;
+    cout << tree << endl;
+
+    insertResult = tree.insert("C", 'C');
+    insertResult = tree.insert("A", 'A'); // single rotate right
+    cout << endl << endl;
+    cout << tree << endl;
+
+    insertResult = tree.insert("D", 'D'); // double rotate right
+    cout << endl << endl;
+    cout << tree << endl;
+
+    insertResult = tree.insert("R", 'R'); // double rotate left
+    cout << endl << endl;
+    cout << tree << endl;
+
+    insertResult = tree.insert("V", 'V');
+    insertResult = tree.insert("A", 'A'); // false, duplicate
+    insertResult = tree.insert("Z", 'Z');
+    insertResult = tree.insert("M", 'M');
+    insertResult = tree.insert("D", 'D'); // false, duplicate
+    cout << endl << endl;
+    cout << tree << endl;
     //
     // // size and getHeight
-    // cout << "tree size: " << tree.size() << endl; // 10
-    // cout << "tree height: " << tree.getHeight() << endl; // 3
-    // cout << endl;
+    cout << "tree size: " << tree.size() << endl; // 10
+    cout << "tree height: " << tree.getHeight() << endl; // 3
+    cout << endl;
 //
 //    // contains
-//    bool containsResult;
-//    containsResult = tree.contains("A"); // true
-//    containsResult = tree.contains("N"); // false
+     bool containsResult;
+     containsResult = tree.contains("A"); // true
+     cout << containsResult << endl;
+     containsResult = tree.contains("N"); // false
+     cout << containsResult << endl;
 //
-//    // get
-//    optional<int> getResult;
+// //
+// //    // get
+     optional<int> getResult;
+
+     getResult = tree.get("A"); // 65
+     cout << "A: " << getResult.value() << endl;
+
+     getResult = tree.get("C"); // 67
+     cout << "C: " << getResult.value() << endl;
+
+     getResult = tree.get("Q"); // getResult has no value
+     cout << "Q: " << getResult.value() << endl; // print 0
+     cout << endl;
+// //
+    // findRange
+    vector<size_t> rangeTest = tree.findRange("D","W");
+    // 70 68 82 75 77 86
+    for (auto val: rangeTest) {
+        cout << val << " ";
+    }
+    cout << endl << endl;
 //
-//    getResult = tree.get("A"); // 65
-//    cout << "A: " << getResult.value() << endl;
-//
-//    getResult = tree.get("C"); // 67
-//    cout << "C: " << getResult.value() << endl;
-//
-//    getResult = tree.get("Q"); // getResult has no value
-//    cout << "Q: " << getResult.has_value() << endl; // print 0
-//    cout << endl;
-//
-//    // findRange
-//    vector<int> rangeTest = tree.findRange("D", "W");
-//    // 70 68 82 75 77 86
-//    for (auto val: rangeTest) {
-//        cout << val << " ";
-//    }
-//    cout << endl << endl;
-//
-//    // operator[]
-//    tree["A"] = 108;
-//    cout << tree << endl;
-//    cout << endl;
-//
-//    // remove
-    // bool removeResult;
-    // removeResult= tree.remove("A"); // "A" is a leaf
-    // cout << endl << endl;
-    // cout << tree << endl;
-    //
-    // removeResult = tree.remove("C"); // "C" has one child, single rotate left
-    // cout << endl << endl;
-    // cout << tree << endl;
-//
-//    removeResult = tree.remove("F"); // "F" has two children
-//    cout << endl << endl;
-//    cout << tree << endl;
-//
-//    removeResult = tree.remove("V");
-//    removeResult = tree.remove("X");
-//    removeResult = tree.remove("Z"); // double rotate right
-//    cout << endl << endl;
-//    cout << tree << endl;
+// //    // operator[]
+     tree["A"] = 108;
+     cout << tree << endl;
+     cout << endl;
+
+   // remove
+    removeResult= tree.remove("A"); // "A" is a leaf
+    cout << endl << endl;
+    cout << tree << endl;
+
+    removeResult = tree.remove("C"); // "C" has one child, single rotate left
+    cout << endl << endl;
+    cout << tree << endl;
+
+   removeResult = tree.remove("F"); // "F" has two children
+   cout << endl << endl;
+   cout << tree << endl;
+
+   removeResult = tree.remove("V");
+   removeResult = tree.remove("X");
+   removeResult = tree.remove("Z"); // double rotate right
+   cout << endl << endl;
+   cout << tree << endl;
 
     return 0;
 }

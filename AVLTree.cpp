@@ -6,24 +6,23 @@
 
 
 bool AVLTree::insert(const std::string &key, size_t value) {
-
-    // if (root == nullptr) {
-    //     root = new AVLNode();
-    //     root->key = key;
-    //     root->value = value;
-    //     root->left = nullptr;
-    //     root->right = nullptr;
-    //     root->height = 0;
-    //     return true;
-    // }
-
     return recursion(root, key, value);
+
 }
 
 bool AVLTree::remove(const std::string &key) {
     return remove(root, key);
 }
 
+bool AVLTree::contains(const std::string &key) const {
+    AVLNode* contains = searchNode(root,key);
+    if (contains == nullptr) {
+        return false;
+    }else {
+        return true;
+    }
+
+}
 
 size_t AVLTree::AVLNode::numChildren() const {
     if (left == nullptr && right == nullptr) {
@@ -99,6 +98,7 @@ bool AVLTree::recursion(AVLNode *&current, const std::string &key, size_t value)
         current->left = nullptr;
         current->right = nullptr;
         current->height = 0;
+        length++;
         return true;
     }
 
@@ -170,7 +170,131 @@ bool AVLTree::rotateLeft(AVLNode *&node) {
 
 void AVLTree::printSubtree(AVLNode *node, int depth) const {
 
+    if (node == nullptr) {
+        return;
+    }
 
+    printSubtree(node->right, depth + 1);
+    for (int i = 0; i < depth; i++) {
+        cout << "  ";
+    }
+    std::cout << node->key << ":"  << " " << node->value << endl;
+    printSubtree(node->left, depth + 1);
+}
+
+void AVLTree::findRangeHelper(AVLNode *node, const string &lowKey, const string &highKey,
+    vector<size_t> &result) const {
+    if (node == nullptr) {
+        return;
+    }
+    if (node -> key > lowKey) {
+        findRangeHelper(node->left, lowKey, highKey, result);
+    }
+    if (node->key >= lowKey && node->key <= highKey) {
+        result.push_back(node->value);
+    }
+    if (node -> key < highKey) {
+        findRangeHelper(node->right, lowKey, highKey, result);
+    }
+}
+
+vector<string> AVLTree::keysHelper(AVLNode *node, vector<string> &result) const {
+
+    if (node == nullptr) {
+        return result;
+    }
+
+    keysHelper(node->left, result);
+    result.push_back(node->key);
+    keysHelper(node->right, result);
+
+    return result;
+}
+
+optional<size_t> AVLTree::get(const std::string &key) const {
+    AVLNode* getValue = searchNode(root,key);
+
+    if (getValue == nullptr) {
+        return 0;
+    }else {
+        return getValue->value  ;
+    }
+}
+
+size_t & AVLTree::operator[](const std::string &key) {
+    AVLNode *node = searchNode(root, key);
+
+    if (node == nullptr) {
+        throw std::runtime_error("Key not found");
+    }
+
+    return node->value;
+}
+
+vector<size_t> AVLTree::findRange(const string &lowKey, const string &highKey) const {
+
+    vector<size_t> result;
+    findRangeHelper(root, lowKey, highKey, result);
+    return result;
+}
+
+vector<std::string> AVLTree::keys() const {
+
+    vector<string> result;
+    result = keysHelper(root,result) ;
+    return result;
+}
+
+size_t AVLTree::size() const {
+    return length;
+}
+
+size_t AVLTree::getHeight() const {
+    if (root == nullptr) {
+        return 0;
+    }
+    return root->height;
+}
+
+AVLTree *AVLTree::operator=(const AVLTree &other) {
+
+    clear(root);
+
+    AVLNode *currentNode = other.root;
+
+}
+
+void AVLTree::clear(AVLNode* node) {
+
+    if (node == nullptr) {
+        return;
+    }
+
+    clear(node->left);
+    clear(node->right);
+    delete node;
+}
+
+AVLTree::~AVLTree() {
+    clear(root);
+    root = nullptr;
+    length = 0;
+}
+
+AVLTree::AVLNode *AVLTree::searchNode(AVLNode *node, const std::string key) const {
+    if (node == nullptr) {
+        return node;
+    }
+    if (node->key == key) {
+        return node;
+    }
+    if (key < node->key) {
+       return  searchNode(node->left, key);
+    }
+    else if (key > node->key) {
+        return  searchNode(node->right, key);
+    }
+    return nullptr;
 }
 
 bool AVLTree::remove(AVLNode *&current, KeyType key) {
@@ -186,12 +310,10 @@ bool AVLTree::remove(AVLNode *&current, KeyType key) {
     }else if (key > current->key) {
         removed =remove(current->right, key);
     }else {
-            removed = removeNode(current);
+        removed = removeNode(current);
+        length--;
         return removed;
     }
-
-
-
     if (removed) {
         current->height = 1 + max(height(current->left), height(current->right));
         balanceNode(current);
@@ -243,6 +365,7 @@ std::ostream & operator<<(ostream &os, const AVLTree &avlTree) {
         return os;
     }
 
+    avlTree.printSubtree(avlTree.root,0);
 
     return os;
 
