@@ -6,11 +6,8 @@ File: AVLTree.cpp
 Description :- This file has implemented AVL tree. There is insertation, remove, find range, balance, height and rotation as main functions. There are other functions as well.
 */
 #include "AVLTree.h"
-
-
 #include <iostream>
 #include <string>
-
 
 //insert key, value pair into avl tree
 bool AVLTree::insert(const std::string &key, size_t value) {

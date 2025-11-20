@@ -7,13 +7,10 @@
 #include <optional>
 #include <string>
 #include <vector>
-
 using namespace std;
 
 class AVLTree {
 public:
-    // AVLTree();
-
     using KeyType = std::string;
     using ValueType = size_t;
     size_t length;
@@ -30,13 +27,6 @@ public:
     AVLTree &operator=(const AVLTree& other);
     ~AVLTree();
 
-
-
-
-
-
-
-
 protected:
     class AVLNode {
     public:
@@ -44,8 +34,6 @@ protected:
         KeyType key;
         ValueType value;
         size_t height;
-
-
         AVLNode* left;
         AVLNode* right;
 
@@ -55,15 +43,9 @@ protected:
         bool isLeaf() const;
         // number of hops to deepest leaf node
         size_t getHeight() const;
-
-
     };
 
 public:
-
-
-
-
     private:
     AVLNode* root;
 
@@ -80,14 +62,8 @@ public:
     vector<string> keysHelper(AVLNode* node, vector<string> &result) const;
     void deepCopyHelper(AVLNode *currentOld, AVLNode *&currentNew);
     AVLTree(const AVLTree& other);
-
     void clear(AVLNode*& node);
     AVLNode *searchNode(AVLNode *node, const std::string key) const;
-
-
-
-
-
 
 private:
 
