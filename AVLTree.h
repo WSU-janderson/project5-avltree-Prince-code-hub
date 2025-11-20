@@ -27,7 +27,7 @@ public:
     vector<std::string>keys() const;
     size_t size() const;
     size_t getHeight() const;
-    AVLTree *operator=(const AVLTree& other);
+    AVLTree &operator=(const AVLTree& other);
     ~AVLTree();
 
 
@@ -78,8 +78,10 @@ public:
     void printSubtree(AVLNode* node, int depth) const;
     void findRangeHelper(AVLNode* node,const string& lowKey, const string& highKey, vector<size_t> &result) const;
     vector<string> keysHelper(AVLNode* node, vector<string> &result) const;
+    void deepCopyHelper(AVLNode *currentOld, AVLNode *&currentNew);
+    AVLTree(const AVLTree& other);
 
-    void clear(AVLNode* node);
+    void clear(AVLNode*& node);
     AVLNode *searchNode(AVLNode *node, const std::string key) const;
 
 
